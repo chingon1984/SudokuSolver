@@ -11,43 +11,48 @@ public class SudokuArray {
         this.array = array;
     }
 
-    public boolean checkRowViolation(int row) {
+
+    public boolean checkRowViolation(int row) throws ArrayIndexOutOfBoundsException{
+        if(row >= SIZE)
+            throw new ArrayIndexOutOfBoundsException("Row was too big");
         int[] rowToCheck = array[row];
-        printCheckArray(rowToCheck);
-        return checkViolation(rowToCheck);
+        return checkArrayViolation(rowToCheck);
     }
     
-    public boolean checkColumnViolation(int column) {
+    public boolean checkColumnViolation(int column) throws ArrayIndexOutOfBoundsException {
+        if(column >= SIZE)
+            throw new ArrayIndexOutOfBoundsException("Column was too big");
         int[] columnToCheck = new int[SIZE];
         for(int i=0; i<SIZE; i++)
             columnToCheck[i] = array[i][column];
 
-        printCheckArray(columnToCheck);
-        return checkViolation(columnToCheck);
+        return checkArrayViolation(columnToCheck);
     }
 
-    public boolean checkBlockViolation(int row, int column) {
+    public boolean checkBlockViolation(int row, int column) throws ArrayIndexOutOfBoundsException {
+        if(row >= SIZE || column >= SIZE)
+            throw new ArrayIndexOutOfBoundsException("Row or Column was too big");
         int[] blockToCheck = getBlockArray(row,column);
-        printCheckArray(blockToCheck);
-        return checkViolation(blockToCheck);
+        return checkArrayViolation(blockToCheck);
     }
     
 
     private int[] getBlockArray(int row, int column) {
-        int box[] = new int[SIZE];
-        int box_r = 3* (row / 3);
-        int box_c = 3* (column / 3);
+        int block[] = new int[SIZE];
+//        row and column belong to which of the 9 blocks. e.g.  row=4,column=7 -> block(1,2)  the 6th.
+        int block_r = 3* (row / 3);
+        int block_c = 3* (column / 3);
 
         int count = 0;
-        for(int i=box_r; i<box_r + 3; i++) {
-            for(int j=box_c; j<box_c + 3; j++) {
-                box[count++] = array[i][j];
+        for(int i=block_r; i<block_r + 3; i++) {
+            for(int j=block_c; j<block_c + 3; j++) {
+                block[count++] = array[i][j];
             }
         }
-        return box;
+        return block;
     }
 
-    private boolean checkViolation(int[] checkArray) {
+    private boolean checkArrayViolation(int[] checkArray) {
         int value;
         int count = 0;
         for (int i = 0; i < SIZE; i++) {

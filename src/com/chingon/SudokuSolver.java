@@ -44,7 +44,7 @@ public class SudokuSolver {
 
     private void testViolations() {
         int count = 0;
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i <= SIZE; i++) {
 //            System.out.println((sudokuArray.checkRowViolation(i) ? "Violation" : "Everything ok") + " in Row");
 //        System.out.println((sudokuArray.checkColumnViolation(i) ? "Violation" : "Everything ok") + " in Column");
             for (int j = 0; j < SIZE; j++) {
