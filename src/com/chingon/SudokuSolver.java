@@ -25,18 +25,37 @@ public class SudokuSolver {
     public void solve(int[][] array) {
         this.sudokuArray = new SudokuArray(array);
 
+        testViolations();
 
-        System.out.println(sudokuArray.checkRowViolation(0) ? "Violation" : "Everything ok");
 
     }
 
     private void getNextEmpty() {
-        for(int i=0; i<SIZE; i++) {
-            for(int j=0; j<SIZE; j++) {
-                if(sudokuArray.array[i][j] == 0) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (sudokuArray.array[i][j] == 0) {
                     System.out.println("Row: " + i + " Column: " + j);
-                    return ;
+                    return;
                 }
+            }
+        }
+    }
+
+
+    private void testViolations() {
+        int count = 0;
+        for (int i = 0; i < SIZE; i++) {
+//            System.out.println((sudokuArray.checkRowViolation(i) ? "Violation" : "Everything ok") + " in Row");
+//        System.out.println((sudokuArray.checkColumnViolation(i) ? "Violation" : "Everything ok") + " in Column");
+            for (int j = 0; j < SIZE; j++) {
+                System.out.println((sudokuArray.checkBlockViolation(i, j) ? "Violation!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" : "Everything ok") + " in block");
+                count++;
+
+                if (count % 3 == 0)
+                    System.out.println("****************");
+            }
+            if (count % 27 == 0) {
+                System.out.println("******************************************");
             }
         }
     }
