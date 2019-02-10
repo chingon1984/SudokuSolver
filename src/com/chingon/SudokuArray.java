@@ -12,14 +12,18 @@ public class SudokuArray {
     }
 
 
-    public boolean checkRowViolation(int row) throws ArrayIndexOutOfBoundsException{
+    public boolean checkIfViolationExist(int row, int column) {
+        return (checkRowViolation(row) || checkColumnViolation(column) || checkBlockViolation(row,column));
+    }
+
+    private boolean checkRowViolation(int row) throws ArrayIndexOutOfBoundsException{
         if(row >= SIZE)
             throw new ArrayIndexOutOfBoundsException("Row was too big");
         int[] rowToCheck = array[row];
         return checkArrayViolation(rowToCheck);
     }
     
-    public boolean checkColumnViolation(int column) throws ArrayIndexOutOfBoundsException {
+    private boolean checkColumnViolation(int column) throws ArrayIndexOutOfBoundsException {
         if(column >= SIZE)
             throw new ArrayIndexOutOfBoundsException("Column was too big");
         int[] columnToCheck = new int[SIZE];
@@ -29,7 +33,7 @@ public class SudokuArray {
         return checkArrayViolation(columnToCheck);
     }
 
-    public boolean checkBlockViolation(int row, int column) throws ArrayIndexOutOfBoundsException {
+    private boolean checkBlockViolation(int row, int column) throws ArrayIndexOutOfBoundsException {
         if(row >= SIZE || column >= SIZE)
             throw new ArrayIndexOutOfBoundsException("Row or Column was too big");
         int[] blockToCheck = getBlockArray(row,column);
@@ -61,11 +65,11 @@ public class SudokuArray {
                 for (int j = 0; j < SIZE; j++) {
                     if (checkArray[j] == value)
                         count++;
+
+                    if(count > 1)
+                        return true;
                 }
             }
-            if(count > 1)
-                return true;
-
             count = 0;
         }
         return false;

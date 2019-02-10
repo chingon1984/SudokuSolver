@@ -25,22 +25,51 @@ public class SudokuSolver {
     public void solve(int[][] array) {
         this.sudokuArray = new SudokuArray(array);
 
-        Cell nextEmptyCell = sudokuArray.getNextEmpty();
-        System.out.println("Row: " + nextEmptyCell.row + " Column: " + nextEmptyCell.column);
 
+    }
 
+    private void recursiveSolve() {
+        /*1) if(returning value = true) -> get next empty cell | if(returning value = false) -> jump back to last cell?
+         * 2) increment cell starting with 1 (1..9)
+         * 3) if cell <= 9
+         * 4)    check for violations
+         * 5)     if NO violation:  ->    go to 1)
+         * 6)     if violation:  ->   go to 2)
+         * 7) if cell > 9
+         * 8)    mark cell as empty  ( 0 )
+         * 9)    go to last cell   -> go to 2)
+         *   */
+        Cell nextEmptyCell;
+        try{
+            nextEmptyCell = sudokuArray.getNextEmpty();
+        } catch (NullPointerException e) {
+            return;
+        }
+
+        int cellValue = ++sudokuArray.array[nextEmptyCell.row][nextEmptyCell.column];
+        int row = nextEmptyCell.row;
+        int column = nextEmptyCell.column;
+
+        if(cellValue <= 9) {
+            if(!sudokuArray.checkIfViolationExist(row,column)) {
+                recursiveSolve();
+            }else {
+
+            }
+
+        }else {
+
+        }
 
 
     }
 
 
-
-
 //    private void testViolations() {
 //        int count = 0;
 //        for (int i = 0; i <= SIZE; i++) {
-////            System.out.println((sudokuArray.checkRowViolation(i) ? "Violation" : "Everything ok") + " in Row");
-////        System.out.println((sudokuArray.checkColumnViolation(i) ? "Violation" : "Everything ok") + " in Column");
+//            System.out.println((sudokuArray.checkRowViolation(i) ? "Violation" : "Everything ok") + " in Row");
+//            System.out.println((sudokuArray.checkColumnViolation(i) ? "Violation" : "Everything ok") + " in Column");
 //            for (int j = 0; j < SIZE; j++) {
 //                System.out.println((sudokuArray.checkBlockViolation(i, j) ? "Violation!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" : "Everything ok") + " in block");
 //                count++;
