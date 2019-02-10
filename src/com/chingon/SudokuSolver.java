@@ -24,11 +24,11 @@ public class SudokuSolver {
 
     public void solve(int[][] array) {
         this.sudokuArray = new SudokuArray(array);
-
-
+        recursiveSolve(sudokuArray.getNextEmpty());
+        printResult();
     }
 
-    private void recursiveSolve() {
+    private void recursiveSolve(Cell cell) {
         /*1) if(returning value = true) -> get next empty cell | if(returning value = false) -> jump back to last cell?
          * 2) increment cell starting with 1 (1..9)
          * 3) if cell <= 9
@@ -39,29 +39,39 @@ public class SudokuSolver {
          * 8)    mark cell as empty  ( 0 )
          * 9)    go to last cell   -> go to 2)
          *   */
-        Cell nextEmptyCell;
-        try{
-            nextEmptyCell = sudokuArray.getNextEmpty();
-        } catch (NullPointerException e) {
+
+
+        if(cell == null)
             return;
-        }
 
-        int cellValue = ++sudokuArray.array[nextEmptyCell.row][nextEmptyCell.column];
-        int row = nextEmptyCell.row;
-        int column = nextEmptyCell.column;
+        int row = cell.row;
+        int column = cell.column;
+        int nextCellValue = ++sudokuArray.array[cell.row][cell.column];
 
-        if(cellValue <= 9) {
-            if(!sudokuArray.checkIfViolationExist(row,column)) {
-                recursiveSolve();
-            }else {
 
+        if (nextCellValue <= 9) {
+            if (!sudokuArray.checkIfViolationExist(row, column)) {
+                Cell nextEmptyCell = sudokuArray.getNextEmpty();
+                recursiveSolve(nextEmptyCell);
+            } else {
+                recursiveSolve(cell);
             }
-
-        }else {
-
+        } else {
+            sudokuArray.array[cell.row][cell.column] = 0;
         }
+    }
 
-
+    private void printResult() {
+        System.out.println("-------------------");
+        for(int i=0; i<SIZE; i++) {
+            System.out.print("|");
+            for(int j=0; j<SIZE; j++) {
+                System.out.print(sudokuArray.array[i][j] + (j!=0 && (j+1)%3==0  ? "|" : " "));
+            }
+            System.out.println();
+            if(i!=0 && (i+1) % 3 == 0)
+                System.out.println("-------------------");
+        }
     }
 
 
