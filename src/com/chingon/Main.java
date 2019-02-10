@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         int test1[][] = new int[][]
-                       {{0,0,2,8,0,0,7,0,5},
+                       {{1,4,2,8,4,6,7,5,5},
                         {0,0,9,0,0,0,0,3,2},
                         {7,0,0,0,6,0,9,8,0},
                         {0,9,3,0,0,1,0,0,6},

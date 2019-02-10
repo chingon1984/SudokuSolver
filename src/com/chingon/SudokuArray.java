@@ -71,6 +71,18 @@ public class SudokuArray {
         return false;
     }
 
+
+    public Cell getNextEmpty() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (array[i][j] == 0) {
+                    return new Cell(i,j);
+                }
+            }
+        }
+        return null;
+    }
+
     public void printCheckArray(int[] array) {
         for(int elt : array) {
             System.out.print(elt + " ");
