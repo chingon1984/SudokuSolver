@@ -24,7 +24,7 @@ public class SudokuSolver {
 
     public void solve(int[][] array) {
         this.sudokuArray = new SudokuArray(array);
-        recursiveSolve(sudokuArray.getNextEmpty());
+        recursiveSolve(sudokuArray.getNextEmptyCell());
         printResult();
     }
 
@@ -40,28 +40,40 @@ public class SudokuSolver {
          * 9)    go to last cell   -> go to 2)
          *   */
 
+//        *********
+        printResult();
+        System.out.println("*********************************");
+//        ************
 
         if(cell == null)
             return null;
 
-        Cell nextCell = cell;
         int row = cell.row;
         int column = cell.column;
         int incrementedCellValue = ++sudokuArray.array[cell.row][cell.column];
 
 
+        Cell nextCell;
         if (incrementedCellValue <= 9) {
-            if (!sudokuArray.checkIfViolationExist(row, column)) {
-                nextCell = recursiveSolve(sudokuArray.getNextEmpty());
+            if (sudokuArray.checkIfViolationExist(row, column)) {
+//                nextCell =  recursiveSolve(cell);
+                return recursiveSolve(cell);
             } else {
-                nextCell =  recursiveSolve(cell);
+                nextCell = recursiveSolve(sudokuArray.getNextEmptyCell());
             }
         } else {
+            // case when all values result in a Violation. -> set value of current cell to 0 and proceed with former cell
             sudokuArray.array[cell.row][cell.column] = 0;
             return cell;
         }
 
+//      this is the case when all values in nextCell result in a Violation. ->
+        if(nextCell != null && nextCell != cell) {
+            nextCell = recursiveSolve(cell);
+        }
 
+        if(nextCell == null)
+            return null;
 
 
         return cell;

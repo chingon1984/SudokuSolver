@@ -76,7 +76,7 @@ public class SudokuArray {
     }
 
 
-    public Cell getNextEmpty() {
+    public Cell getNextEmptyCell() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (array[i][j] == 0) {
