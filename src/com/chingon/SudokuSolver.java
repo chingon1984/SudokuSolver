@@ -45,9 +45,6 @@ public class SudokuSolver {
         System.out.println("*********************************");
 //        ************
 
-        if(cell == null)
-            return null;
-
         int row = cell.row;
         int column = cell.column;
         int incrementedCellValue = ++sudokuArray.array[cell.row][cell.column];
@@ -56,10 +53,13 @@ public class SudokuSolver {
         Cell nextCell;
         if (incrementedCellValue <= 9) {
             if (sudokuArray.checkIfViolationExist(row, column)) {
-//                nextCell =  recursiveSolve(cell);
                 return recursiveSolve(cell);
             } else {
-                nextCell = recursiveSolve(sudokuArray.getNextEmptyCell());
+                Cell nextFreeCell = sudokuArray.getNextEmptyCell();
+                if(nextFreeCell == null)
+                    return null;
+
+                nextCell = recursiveSolve(nextFreeCell);
             }
         } else {
             // case when all values result in a Violation. -> set value of current cell to 0 and proceed with former cell
