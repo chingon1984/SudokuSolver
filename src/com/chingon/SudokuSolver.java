@@ -28,7 +28,7 @@ public class SudokuSolver {
         printResult();
     }
 
-    private void recursiveSolve(Cell cell) {
+    private Cell recursiveSolve(Cell cell) {
         /*1) if(returning value = true) -> get next empty cell | if(returning value = false) -> jump back to last cell?
          * 2) increment cell starting with 1 (1..9)
          * 3) if cell <= 9
@@ -42,23 +42,29 @@ public class SudokuSolver {
 
 
         if(cell == null)
-            return;
+            return null;
 
+        Cell nextCell = cell;
         int row = cell.row;
         int column = cell.column;
-        int nextCellValue = ++sudokuArray.array[cell.row][cell.column];
+        int incrementedCellValue = ++sudokuArray.array[cell.row][cell.column];
 
 
-        if (nextCellValue <= 9) {
+        if (incrementedCellValue <= 9) {
             if (!sudokuArray.checkIfViolationExist(row, column)) {
-                Cell nextEmptyCell = sudokuArray.getNextEmpty();
-                recursiveSolve(nextEmptyCell);
+                nextCell = recursiveSolve(sudokuArray.getNextEmpty());
             } else {
-                recursiveSolve(cell);
+                nextCell =  recursiveSolve(cell);
             }
         } else {
             sudokuArray.array[cell.row][cell.column] = 0;
+            return cell;
         }
+
+
+
+
+        return cell;
     }
 
     private void printResult() {
@@ -66,7 +72,8 @@ public class SudokuSolver {
         for(int i=0; i<SIZE; i++) {
             System.out.print("|");
             for(int j=0; j<SIZE; j++) {
-                System.out.print(sudokuArray.array[i][j] + (j!=0 && (j+1)%3==0  ? "|" : " "));
+                int value = sudokuArray.array[i][j];
+                System.out.print((value != 0 ? value : " ") + (j!=0 && (j+1)%3==0  ? "|" : " "));
             }
             System.out.println();
             if(i!=0 && (i+1) % 3 == 0)
