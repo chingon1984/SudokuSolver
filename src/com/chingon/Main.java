@@ -9,6 +9,10 @@ if it is discovered that the "1" is not allowed, the value is advanced to "2". I
 the 9 digits is allowed, then the algorithm leaves that cell blank and moves back to the previous cell. The value in
 that cell is then incremented by one. This is repeated until the allowed value in the last (81st) cell is discovered.*/
 
+
+/* Sudoku Generator
+*https://www.sudoku-knacker.de
+*/
 public class Main {
 
     public static void main(String[] args) {
