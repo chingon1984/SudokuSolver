@@ -14,35 +14,30 @@ public class SudokuSolver {
 
     public void solve(int[][] array) {
         this.sudokuArray = new SudokuArray(array);
+        printResult();
         recursiveSolve();
         printResult();
     }
 
     private boolean recursiveSolve() {
+
         Cell cell = sudokuArray.getNextEmptyCell();
+        if(cell == null)
+            return true;
 
-        if (cell != null) {
-            int row = cell.row;
-            int column = cell.column;
-            int nextNumber = sudokuArray.getNextPossibleNumber(row, column);
+        int row = cell.row;
+        int column = cell.column;
 
-            if (nextNumber != 0) {
-                sudokuArray.array[row][column] = nextNumber;
-//            *****
-                printResult();
-                System.out.println("*********************************");
-//            ********
 
-                if (!sudokuArray.checkIfViolationExist(row, column)) {
-                    sudokuArray.deleteNumber(row, column, nextNumber);
-                    sudokuArray.array[row][column] = EMPTY;
-                }
-                recursiveSolve();
+        for (int i = 1; i <= 9; i++) {
+            sudokuArray.array[row][column] = i;
+
+            if (!sudokuArray.checkIfViolationExist(row, column) && recursiveSolve()) {
+                return true;
             }
-            return false;
+            sudokuArray.array[row][column] = EMPTY;
         }
-
-        return true;
+        return false;
     }
 
     private void printResult() {

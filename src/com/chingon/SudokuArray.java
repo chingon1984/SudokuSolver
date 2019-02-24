@@ -21,7 +21,7 @@ public class SudokuArray {
     public int getNextPossibleNumber(int row, int column) {
         int index = 9 * row + column;
         for(int i=0; i<9 ; i++) {
-            if (validNumbers[index][i])
+//            if (validNumbers[index][i])
                 return i+1;
         }
         return 0;
@@ -105,12 +105,5 @@ public class SudokuArray {
             }
         }
         return null;
-    }
-
-    public void printCheckArray(int[] array) {
-        for (int elt : array) {
-            System.out.print(elt + " ");
-        }
-        System.out.println();
     }
 }
