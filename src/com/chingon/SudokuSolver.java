@@ -15,8 +15,13 @@ public class SudokuSolver {
     public void solve(int[][] array) {
         this.sudokuArray = new SudokuArray(array);
         printResult();
+        System.out.println("\n******** Calculating ********\n");
+        long startTime = System.currentTimeMillis();
         recursiveSolve();
+        long endTime = System.currentTimeMillis();
         printResult();
+
+        System.out.println("\nElapsed time : " + (endTime - startTime) + " ms");
     }
 
     private boolean recursiveSolve() {

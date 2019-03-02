@@ -18,19 +18,6 @@ public class SudokuArray {
 
     }
 
-    public int getNextPossibleNumber(int row, int column) {
-        int index = 9 * row + column;
-        for(int i=0; i<9 ; i++) {
-//            if (validNumbers[index][i])
-                return i+1;
-        }
-        return 0;
-    }
-
-    public void deleteNumber(int row, int column, int number) {
-        int index = 9 * row + column;
-        validNumbers[index][number-1] = false;
-    }
 
     public boolean checkIfViolationExist(int row, int column) {
         return (checkRowViolation(row) || checkColumnViolation(column) || checkBlockViolation(row, column));
